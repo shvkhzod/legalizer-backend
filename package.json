@@ -1,0 +1,34 @@
+{
+  "name": "legalizer-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Backend API for Charity Compliance Checker",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "migrate": "node migrate.js",
+    "db:init": "psql -U postgres -f src/db/init.sql",
+    "db:schema": "psql -U postgres -d charity_compliance -f src/db/schema.sql"
+  },
+  "keywords": [
+    "fastify",
+    "postgresql",
+    "typescript",
+    "api"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "pino-pretty": "^13.1.2",
+    "tsx": "^4.20.6"
+  },
+  "dependencies": {
+    "@fastify/jwt": "^10.0.0",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "bcryptjs": "^3.0.3",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
