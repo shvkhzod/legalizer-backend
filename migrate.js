@@ -1,11 +1,16 @@
 // Simple migration script for Railway
-const { Client } = require('pg');
-const fs = require('fs');
-const path = require('path');
+import pg from 'pg';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const { Client } = pg;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 async function migrate() {
   // Use DATABASE_URL from Railway or construct from env vars
-  const connectionString = process.env.DATABASE_URL || 
+  const connectionString = process.env.DATABASE_URL ||
     `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
 
   const client = new Client({ connectionString });
@@ -17,7 +22,7 @@ async function migrate() {
     // Read and execute schema.sql
     const schemaPath = path.join(__dirname, 'src', 'db', 'schema.sql');
     const schema = fs.readFileSync(schemaPath, 'utf8');
-    
+
     console.log('Running database migrations...');
     await client.query(schema);
     console.log('✓ Database schema created successfully!');
